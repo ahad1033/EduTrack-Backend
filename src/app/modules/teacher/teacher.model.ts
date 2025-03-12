@@ -14,6 +14,7 @@ const teacherSchema = new Schema(
     subject: { type: String },
     phone: { type: String },
     needPassChange: { type: Boolean, default: true },
+    isDeleted: { type: Boolean, default: false },
   },
   {
     timestamps: true,

@@ -30,4 +30,16 @@ router.patch(
   TeacherControllers.changePassword
 );
 
+// GET ALL TEACHERS
+router.get("/", jwtMiddleware, TeacherControllers.getAllTeachers);
+
+// GET A TEACHER BY ID
+router.get("/:id", jwtMiddleware, TeacherControllers.getTeacherById);
+
+// DELETE A TEACHER BY ID
+router.delete("/:id", jwtMiddleware, TeacherControllers.deleteTeacherById);
+
+// UPDATE A TEACHER BY ID
+router.patch("/:id", jwtMiddleware, TeacherControllers.updateTeacherById);
+
 export const TeacherRoutes = router;

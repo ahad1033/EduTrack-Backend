@@ -7,4 +7,5 @@ export interface ITeacher {
   subject: String;
   phone: string;
   needPassChange?: boolean;
+  isDeleted?: boolean;
 }
