@@ -6,7 +6,7 @@ import { Teacher } from "./teacher.model";
 const superUser = {
   name: "Ahad Ahamed",
   email: "superadmin@edutrack.com",
-  password: "edutrAck1033",
+  password: config.super_admin_password,
   role: "super_admin",
   phone: "01636428995",
   needPassChange: false,
