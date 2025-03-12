@@ -1,0 +1,22 @@
+import path from "path";
+import dotenv from "dotenv";
+
+interface IConfig {
+  port: string;
+  database_url: string;
+  bcrypt_salt_rounds: string;
+  jwt_access_secret: string;
+  jwt_access_expires_in: string;
+}
+
+dotenv.config({ path: path.join((process.cwd(), ".env")) });
+
+const config: IConfig = {
+  port: process.env.PORT || "5000",
+  database_url: process.env.DATABASE_URL || "",
+  bcrypt_salt_rounds: process.env.BCRYPT_SALT_ROUNDS || "10",
+  jwt_access_secret: process.env.JWT_ACCESS_SECRET || "default-secret",
+  jwt_access_expires_in: process.env.JWT_ACCESS_EXPIRES_IN || "10d",
+};
+
+export default config;
