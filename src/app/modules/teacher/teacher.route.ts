@@ -1,24 +1,25 @@
 import express from "express";
 
 import { jwtMiddleware } from "../../middlewares/jwtMiddleware";
-import { UserValidation } from "../../validation/user.validation";
+
+import { TeacherControllers } from "./teacher.controller";
+import { TeacherValidation } from "../../validation/teacher.validation";
 
 import validateRequest from "../../middlewares/validateRequest";
-import { TeacherControllers } from "./teacher.controller";
 
 const router = express.Router();
 
 // CREATE A TEACHER
 router.post(
-  "/create-user",
-  validateRequest(UserValidation.createUserZodSchema),
+  "/create-teacher",
+  validateRequest(TeacherValidation.createTeacherZodSchema),
   TeacherControllers.createTeacher
 );
 
 // TEACHER LOGIN
 router.post(
   "/login",
-  validateRequest(UserValidation.loginZodSchema),
+  validateRequest(TeacherValidation.loginZodSchema),
   TeacherControllers.loginTeacher
 );
 

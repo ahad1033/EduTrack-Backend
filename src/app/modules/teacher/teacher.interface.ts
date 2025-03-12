@@ -1,5 +1,3 @@
-// import { Types } from "mongoose";
-
 export interface ITeacher {
   name: string;
   email: string;
@@ -9,5 +7,4 @@ export interface ITeacher {
   subject: String;
   phone: string;
   needPassChange?: boolean;
-  //   shopId: Types.ObjectId;
 }

@@ -14,7 +14,6 @@ const teacherSchema = new Schema(
     subject: { type: String },
     phone: { type: String },
     needPassChange: { type: Boolean, default: true },
-    // shopId: { type: Schema.Types.ObjectId, ref: "Shop" },
   },
   {
     timestamps: true,

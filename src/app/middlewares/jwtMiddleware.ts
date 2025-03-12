@@ -1,8 +1,8 @@
 import jwt from "jsonwebtoken";
 import { Request, Response, NextFunction } from "express";
 
-import { TUserRole } from "../constants";
 import config from "../config";
+import { TUserRole } from "../constants";
 
 interface DecodedUser {
   userId: string;
