@@ -1,11 +1,11 @@
 import express from "express";
 
-import { jwtMiddleware } from "../../middlewares/jwtMiddleware";
-
 import { TeacherControllers } from "./teacher.controller";
+import { authMiddleware } from "../../middlewares/authMiddleware";
 import { TeacherValidation } from "../../validation/teacher.validation";
 
 import validateRequest from "../../middlewares/validateRequest";
+import { TEACHERS_ROLE } from "./teacher.constant";
 
 const router = express.Router();
 
@@ -16,30 +16,32 @@ router.post(
   TeacherControllers.createTeacher
 );
 
-// TEACHER LOGIN
-router.post(
-  "/login",
-  validateRequest(TeacherValidation.loginZodSchema),
-  TeacherControllers.loginTeacher
-);
-
-// CHANGE PASSWORD
-router.patch(
-  "/change-password",
-  jwtMiddleware,
-  TeacherControllers.changePassword
-);
-
 // GET ALL TEACHERS
-router.get("/", jwtMiddleware, TeacherControllers.getAllTeachers);
+router.get(
+  "/",
+  authMiddleware(TEACHERS_ROLE.teacher, TEACHERS_ROLE.super_admin),
+  TeacherControllers.getAllTeachers
+);
 
 // GET A TEACHER BY ID
-router.get("/:id", jwtMiddleware, TeacherControllers.getTeacherById);
+router.get(
+  "/:id",
+  authMiddleware(TEACHERS_ROLE.super_admin),
+  TeacherControllers.getTeacherById
+);
 
 // DELETE A TEACHER BY ID
-router.delete("/:id", jwtMiddleware, TeacherControllers.deleteTeacherById);
+router.delete(
+  "/:id",
+  authMiddleware(TEACHERS_ROLE.super_admin),
+  TeacherControllers.deleteTeacherById
+);
 
 // UPDATE A TEACHER BY ID
-router.patch("/:id", jwtMiddleware, TeacherControllers.updateTeacherById);
+router.patch(
+  "/:id",
+  authMiddleware(TEACHERS_ROLE.super_admin),
+  TeacherControllers.updateTeacherById
+);
 
 export const TeacherRoutes = router;

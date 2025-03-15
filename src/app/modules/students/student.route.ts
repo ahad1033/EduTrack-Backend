@@ -1,36 +1,49 @@
 import express from "express";
 
-import { jwtMiddleware } from "../../middlewares/jwtMiddleware";
+import { StudentControllers } from "./student.controller";
+import { authMiddleware } from "../../middlewares/authMiddleware";
+import { StudentValidation } from "../../validation/student.validation";
 
 import validateRequest from "../../middlewares/validateRequest";
-
-import { StudentControllers } from "./student.controller";
-import { StudentValidation } from "../../validation/student.validation";
+import { TEACHERS_ROLE } from "../teacher/teacher.constant";
 
 const router = express.Router();
 
 // CREATE A STUDENT
 router.post(
   "/create-student",
+  authMiddleware(TEACHERS_ROLE.super_admin, TEACHERS_ROLE.teacher),
   validateRequest(StudentValidation.createStudentZodSchema),
   StudentControllers.createStudent
 );
 
 // EDIT A STUDENT
 router.patch(
-  "/student/:id",
-  jwtMiddleware,
+  "/edit-student/:id",
+  authMiddleware(TEACHERS_ROLE.super_admin, TEACHERS_ROLE.teacher),
   validateRequest(StudentValidation.editStudentZodSchema),
   StudentControllers.editStudent
 );
 
 // DELETE A STUDENT
-router.delete("/student/:id", jwtMiddleware, StudentControllers.deleteStudent);
+router.delete(
+  "/delete-student/:id",
+  authMiddleware(TEACHERS_ROLE.super_admin, TEACHERS_ROLE.teacher),
+  StudentControllers.deleteStudent
+);
 
 // GET ALL STUDENTS
-router.get("/", jwtMiddleware, StudentControllers.getStudents);
+router.get(
+  "/get-all-students",
+  authMiddleware(TEACHERS_ROLE.super_admin, TEACHERS_ROLE.teacher),
+  StudentControllers.getStudents
+);
 
 // GET A STUDENT BY ID
-router.get("/:id", jwtMiddleware, StudentControllers.getStudentById);
+router.get(
+  "/get-single-student/:id",
+  authMiddleware(TEACHERS_ROLE.super_admin, TEACHERS_ROLE.teacher),
+  StudentControllers.getStudentById
+);
 
 export const StudentRoutes = router;

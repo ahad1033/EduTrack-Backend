@@ -1,12 +1,9 @@
-import { USER_ROLE } from "../constants";
+import { JwtPayload } from "jsonwebtoken";
 
 declare global {
   namespace Express {
     interface Request {
-      user: {
-        userId: string;
-        role: (typeof USER_ROLE)[keyof typeof USER_ROLE];
-      };
+      teacher: JwtPayload;
     }
   }
 }

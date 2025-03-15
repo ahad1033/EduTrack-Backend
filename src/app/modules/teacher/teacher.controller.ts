@@ -27,67 +27,6 @@ const createTeacher = async (req: Request, res: Response) => {
   }
 };
 
-// TEACHER LOGIN
-const loginTeacher = async (req: Request, res: Response) => {
-  try {
-    const { email, password } = req.body;
-
-    const { user, token } = await TeacherServices.loginTeacher(email, password);
-
-    res.status(200).json({
-      success: true,
-      message: "Teacher logged in successfully!",
-      data: {
-        user,
-        token,
-      },
-    });
-  } catch (error) {
-    let errorMessage = "Something went wrong!";
-    if (error instanceof Error) {
-      errorMessage = error.message;
-    }
-    res.status(401).json({
-      success: false,
-      message: "Failed to login",
-      error: errorMessage,
-    });
-  }
-};
-
-// CHANGE PASSWORD
-const changePassword = async (req: Request, res: Response): Promise<void> => {
-  try {
-    const userId = req.user.userId;
-    const { oldPassword, newPassword } = req.body;
-
-    if (!oldPassword || !newPassword) {
-      res.status(400).json({
-        success: false,
-        message: "Both old and new passwords are required",
-      });
-      return;
-    }
-
-    const result = await TeacherServices.changePassword(
-      userId,
-      oldPassword,
-      newPassword
-    );
-
-    res.status(200).json({
-      success: true,
-      message: result.message,
-      user: result.user,
-    });
-  } catch (error) {
-    res.status(400).json({
-      success: false,
-      message: "Failed to change password",
-    });
-  }
-};
-
 // GET ALL TEACHERS
 const getAllTeachers = async (req: Request, res: Response) => {
   try {
@@ -170,9 +109,7 @@ const updateTeacherById = async (req: Request, res: Response) => {
 };
 
 export const TeacherControllers = {
-  loginTeacher,
   createTeacher,
-  changePassword,
   getAllTeachers,
   getTeacherById,
   deleteTeacherById,
