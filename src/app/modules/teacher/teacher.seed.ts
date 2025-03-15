@@ -17,7 +17,7 @@ export const seedSuperAdmin = async () => {
 
   const hashedPassword = await bcrypt.hash(
     superUser.password,
-    parseInt(config.bcrypt_salt_rounds, 10)
+    Number(config.bcrypt_salt_rounds)
   );
 
   const superAdminDataWithHashedPass = {

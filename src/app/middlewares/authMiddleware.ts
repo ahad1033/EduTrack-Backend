@@ -1,6 +1,8 @@
 import { Request, Response, NextFunction } from "express";
 import jwt, { JwtPayload } from "jsonwebtoken";
+
 import config from "../config";
+
 import { TTeacherRole } from "../modules/teacher/teacher.interface";
 import { Teacher } from "../modules/teacher/teacher.model";
 

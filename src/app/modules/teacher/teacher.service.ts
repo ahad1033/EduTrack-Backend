@@ -1,7 +1,7 @@
 import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
 
 import config from "../../config";
+
 import { ITeacher } from "./teacher.interface";
 import { Teacher } from "./teacher.model";
 

@@ -1,11 +1,11 @@
 import express from "express";
 
+import { TEACHERS_ROLE } from "./teacher.constant";
 import { TeacherControllers } from "./teacher.controller";
 import { authMiddleware } from "../../middlewares/authMiddleware";
 import { TeacherValidation } from "../../validation/teacher.validation";
 
 import validateRequest from "../../middlewares/validateRequest";
-import { TEACHERS_ROLE } from "./teacher.constant";
 
 const router = express.Router();
 

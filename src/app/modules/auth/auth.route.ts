@@ -1,10 +1,11 @@
 import express from "express";
-import validateRequest from "../../middlewares/validateRequest";
 
 import { AuthValidation } from "../../validation/auth.validation";
 import { AuthController } from "./auth.controller";
 import { authMiddleware } from "../../middlewares/authMiddleware";
 import { TEACHERS_ROLE } from "../teacher/teacher.constant";
+
+import validateRequest from "../../middlewares/validateRequest";
 
 const router = express.Router();
 

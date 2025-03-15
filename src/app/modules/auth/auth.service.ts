@@ -1,10 +1,10 @@
 import bcrypt from "bcrypt";
 import jwt, { JwtPayload } from "jsonwebtoken";
 
+import config from "../../config";
+
 import { Teacher } from "../teacher/teacher.model";
 import { TLoginTeacher } from "./auth.interface";
-
-import config from "../../config";
 
 const loginTeacher = async (payload: TLoginTeacher) => {
   const isTeacherExist = await Teacher.findOne({ email: payload.email }).select(
