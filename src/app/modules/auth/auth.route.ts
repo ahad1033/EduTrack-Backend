@@ -1,9 +1,9 @@
 import express from "express";
 
-import { AuthValidation } from "../../validation/auth.validation";
 import { AuthController } from "./auth.controller";
-import { authMiddleware } from "../../middlewares/authMiddleware";
 import { TEACHERS_ROLE } from "../teacher/teacher.constant";
+import { AuthValidation } from "../../validation/auth.validation";
+import { authMiddleware } from "../../middlewares/authMiddleware";
 
 import validateRequest from "../../middlewares/validateRequest";
 
@@ -20,6 +20,12 @@ router.post(
   authMiddleware(TEACHERS_ROLE.teacher),
   validateRequest(AuthValidation.changePasswordValidationSchema),
   AuthController.changePassword
+);
+
+router.post(
+  "/refresh-token",
+  validateRequest(AuthValidation.refreshTokenValidationSchema),
+  AuthController.refreshToken
 );
 
 export const AuthRoutes = router;

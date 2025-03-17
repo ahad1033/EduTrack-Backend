@@ -55,7 +55,33 @@ const changePassword = async (req: Request, res: Response) => {
     });
   }
 };
+
+const refreshToken = async (req: Request, res: Response) => {
+  try {
+    const { refreshToken } = req.cookies;
+
+    const result = await AuthService.refreshToken(refreshToken);
+
+    res.status(200).json({
+      success: true,
+      message: "Access token is retrieved successfully!",
+      data: result,
+    });
+  } catch (error) {
+    let errorMessage = "Something went wrong!";
+    if (error instanceof Error) {
+      errorMessage = error.message;
+    }
+    res.status(500).json({
+      success: false,
+      message: "Failed to get new access token",
+      error: errorMessage,
+    });
+  }
+};
+
 export const AuthController = {
   loginTeacher,
+  refreshToken,
   changePassword,
 };

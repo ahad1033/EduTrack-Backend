@@ -3,8 +3,8 @@ import jwt, { JwtPayload } from "jsonwebtoken";
 
 import config from "../../config";
 
-import { Teacher } from "../teacher/teacher.model";
 import { TLoginTeacher } from "./auth.interface";
+import { Teacher } from "../teacher/teacher.model";
 
 const loginTeacher = async (payload: TLoginTeacher) => {
   const isTeacherExist = await Teacher.findOne({ email: payload.email }).select(
@@ -116,7 +116,59 @@ const changePassword = async (
   return null;
 };
 
+const refreshToken = async (refreshToken: string) => {
+  // CHECK IF THE TOKEN IS PRESENT
+  if (!refreshToken) {
+    throw new Error("You are not authorized to access this resource!");
+  }
+
+  // CHECK IF THE TOKEN IS VALID
+  try {
+    const decoded = jwt.verify(
+      refreshToken,
+      config.jwt_refresh_secret as string
+    ) as JwtPayload;
+    console.log("DECODED: ", decoded);
+
+    const role = decoded.role;
+
+    const isTeacherExist = await Teacher.findOne({
+      email: decoded.email,
+    });
+
+    console.log("IS TEACHER EXIST: ", isTeacherExist);
+
+    if (!isTeacherExist) {
+      throw new Error("Teacher not found");
+    }
+
+    // CHECK IF THE TEACHER IS DELETED
+    const isDeleted = isTeacherExist?.isDeleted;
+
+    if (isDeleted) {
+      throw new Error("Teacher is deleted");
+    }
+
+    const accessToken = jwt.sign(
+      {
+        email: isTeacherExist?.email,
+        role: isTeacherExist?.role,
+        teacherId: isTeacherExist?.id,
+      },
+      config.jwt_refresh_secret as string,
+      { expiresIn: "365d" }
+    );
+
+    return {
+      accessToken,
+    };
+  } catch (error) {
+    throw new Error("You are not authorized to access this resource!");
+  }
+};
+
 export const AuthService = {
   loginTeacher,
+  refreshToken,
   changePassword,
 };

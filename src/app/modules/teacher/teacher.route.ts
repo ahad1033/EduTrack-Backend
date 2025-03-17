@@ -12,6 +12,7 @@ const router = express.Router();
 // CREATE A TEACHER
 router.post(
   "/create-teacher",
+  authMiddleware(TEACHERS_ROLE.super_admin),
   validateRequest(TeacherValidation.createTeacherZodSchema),
   TeacherControllers.createTeacher
 );
