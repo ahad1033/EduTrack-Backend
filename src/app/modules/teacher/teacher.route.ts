@@ -19,28 +19,28 @@ router.post(
 
 // GET ALL TEACHERS
 router.get(
-  "/",
+  "/get-all-teachers",
   authMiddleware(TEACHERS_ROLE.teacher, TEACHERS_ROLE.super_admin),
   TeacherControllers.getAllTeachers
 );
 
 // GET A TEACHER BY ID
 router.get(
-  "/:id",
+  "/get-single-teacher/:id",
   authMiddleware(TEACHERS_ROLE.super_admin),
   TeacherControllers.getTeacherById
 );
 
 // DELETE A TEACHER BY ID
 router.delete(
-  "/:id",
+  "/delete-teacher/:id",
   authMiddleware(TEACHERS_ROLE.super_admin),
   TeacherControllers.deleteTeacherById
 );
 
 // UPDATE A TEACHER BY ID
 router.patch(
-  "/:id",
+  "/update-teacher/:id",
   authMiddleware(TEACHERS_ROLE.super_admin),
   TeacherControllers.updateTeacherById
 );
