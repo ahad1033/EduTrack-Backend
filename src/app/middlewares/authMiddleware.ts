@@ -1,5 +1,5 @@
-import { Request, Response, NextFunction } from "express";
 import jwt, { JwtPayload } from "jsonwebtoken";
+import { Request, Response, NextFunction } from "express";
 
 import config from "../config";
 
@@ -28,7 +28,7 @@ export const authMiddleware = (...requiredRoles: TTeacherRole[]) => {
 
       const isTeacherExist = await Teacher.findOne({
         email: decoded.email,
-      }).select("+password");
+      });
 
       console.log("IS TEACHER EXIST: ", isTeacherExist);
 

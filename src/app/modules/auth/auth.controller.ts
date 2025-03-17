@@ -4,12 +4,20 @@ import { AuthService } from "./auth.service";
 
 const loginTeacher = async (req: Request, res: Response) => {
   try {
-    const student = await AuthService.loginTeacher(req.body);
+    const result = await AuthService.loginTeacher(req.body);
+
+    const { refreshToken, accessToken, needsPassowrdChange } = result;
+
+    res.cookie("refreshToken", refreshToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      maxAge: 365 * 24 * 60 * 60 * 1000,
+    });
 
     res.status(200).json({
       success: true,
       message: "Logged in successfully!",
-      data: student,
+      data: { accessToken, needsPassowrdChange },
     });
   } catch (error) {
     let errorMessage = "Something went wrong!";

@@ -47,8 +47,22 @@ const loginTeacher = async (payload: TLoginTeacher) => {
     }
   );
 
+  // CREATE REFRESH TOKEN
+  const refreshToken = jwt.sign(
+    {
+      email: isTeacherExist?.email,
+      role: isTeacherExist?.role,
+      teacherId: isTeacherExist?.id,
+    },
+    config.jwt_refresh_secret as string,
+    {
+      expiresIn: "365d",
+    }
+  );
+
   return {
     accessToken,
+    refreshToken,
     needsPassowrdChange: isTeacherExist?.needPassChange,
   };
 };
