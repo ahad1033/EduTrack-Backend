@@ -5,10 +5,11 @@ export interface ITeacher {
   email: string;
   password: string;
   passChangedAt?: Date;
-  role: "super_admin" | "teacher";
+  role?: "super_admin" | "teacher";
   gender: "male" | "female";
   subject: String;
   phone: string;
+  address?: string;
   needPassChange?: boolean;
   isDeleted?: boolean;
 }

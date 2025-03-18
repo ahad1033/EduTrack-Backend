@@ -10,9 +10,9 @@ export const authMiddleware = (...requiredRoles: TTeacherRole[]) => {
   return async (req: Request, _res: Response, next: NextFunction) => {
     const token = req.headers.authorization;
 
-    console.log("token: ", token);
-    console.log("headers: ", req.headers.authorization);
-    console.log("body: ", req.body);
+    // console.log("token: ", token);
+    // console.log("headers: ", req.headers);
+    // console.log("body: ", req.body);
 
     // CHECK IF THE TOKEN IS PRESENT
     if (!token) {
@@ -22,7 +22,6 @@ export const authMiddleware = (...requiredRoles: TTeacherRole[]) => {
     // CHECK IF THE TOKEN IS VALID
     try {
       const decoded = jwt.verify(token, config.jwt_access_secret) as JwtPayload;
-      console.log("DECODED: ", decoded);
 
       const role = decoded.role;
 

@@ -14,6 +14,7 @@ const teacherSchema = new Schema(
     gender: { type: String, enum: ["male", "female"] },
     subject: { type: String },
     phone: { type: String },
+    address: { type: String },
     needPassChange: { type: Boolean, default: true },
     isDeleted: { type: Boolean, default: false },
   },

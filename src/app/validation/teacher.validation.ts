@@ -8,14 +8,13 @@ const createTeacherZodSchema = z.object({
       .string({ required_error: "Email is required" })
       .email("Invalid email"),
     password: z.string({ required_error: "Password is required" }),
-    role: z.enum(["super_admin", "teacher"], {
-      required_error: "Role is required",
-    }),
+    role: z.enum(["super_admin", "teacher"]).optional(),
     gender: z.enum(["male", "female"], {
       required_error: "Gender is required",
     }),
     subject: z.string({ required_error: "Subject is required" }),
     phone: z.string({ required_error: "Phone is required" }),
+    address: z.string().optional(),
     needPassChange: z.boolean().optional(),
   }),
 });

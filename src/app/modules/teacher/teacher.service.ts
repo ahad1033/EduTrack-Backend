@@ -2,11 +2,17 @@ import bcrypt from "bcrypt";
 
 import config from "../../config";
 
-import { ITeacher } from "./teacher.interface";
 import { Teacher } from "./teacher.model";
+import { ITeacher } from "./teacher.interface";
 
 const createTeacher = async (teacherData: ITeacher) => {
   try {
+    // Check if the email already exists
+    const existingTeacher = await Teacher.findOne({ email: teacherData.email });
+
+    if (existingTeacher) {
+      throw new Error("This email already exists! Please use another email.");
+    }
     // Hash the password before saving
     const hashedPassword = await bcrypt.hash(
       teacherData.password,
@@ -23,14 +29,19 @@ const createTeacher = async (teacherData: ITeacher) => {
     const teacher = new Teacher(teacherWithHashedPassword);
     return await teacher.save();
   } catch (error) {
-    throw new Error("Failed to create teacher");
+    throw error;
   }
 };
 
 const getAllTeachers = async () => {
   try {
-    // Retrieve all teachers who are not deleted
-    return await Teacher.find({ isDeleted: false });
+    // Retrieve all teachers who are not deleted and whose role is not super_admin
+    const teachers = await Teacher.find({
+      isDeleted: false,
+      role: { $ne: "super_admin" },
+    });
+
+    return teachers;
   } catch (error) {
     throw new Error("Failed to retrieve teachers");
   }
